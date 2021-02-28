@@ -64,9 +64,7 @@ służącego do analizy i obróbki danych niezależnie od języka.
 Summary:	API documentation for Python pandas module
 Summary(pl.UTF-8):	Dokumentacja API modułu Pythona pandas
 Group:		Documentation
-%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 API documentation for Python pandas module.
