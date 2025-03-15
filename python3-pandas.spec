@@ -7,20 +7,25 @@
 Summary:	Powerful data structures for data analysis, time series and statistics
 Summary(pl.UTF-8):	Elastyczne struktury danych do analizy danych, szeregów chronologicznych i statystyki
 Name:		python3-pandas
-Version:	1.4.4
-Release:	3
+Version:	2.2.3
+Release:	1
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pandas/
 Source0:	https://files.pythonhosted.org/packages/source/p/pandas/pandas-%{version}.tar.gz
-# Source0-md5:	1dceb2c9735b077ae303d29aee2fdfe0
+# Source0-md5:	67cae6d658e0e0716518afd84d7d43ce
+Patch0:		no-strict-deps.patch
 URL:		https://pypi.org/project/pandas/
 BuildRequires:	libstdc++-devel
-BuildRequires:	python3-Cython >= 0.29.32
-BuildRequires:	python3-Cython < 3
+BuildRequires:	meson >= 1.2.1
+BuildRequires:	python3-Cython >= 3.0.5
+BuildRequires:	python3-Cython < 3.1
+BuildRequires:	python3-build
 BuildRequires:	python3-devel >= 1:3.8
-BuildRequires:	python3-numpy-devel >= 1.21.0
-BuildRequires:	python3-setuptools >= 1:51.0.0
+BuildRequires:	python3-installer
+BuildRequires:	python3-meson-python >= 0.13.1
+BuildRequires:	python3-numpy-devel >= 2.0
+BuildRequires:	python3-versioneer
 %if %{with tests}
 BuildRequires:	python3-dateutil >= 2.8.1
 # used by hypothesis
@@ -32,7 +37,7 @@ BuildRequires:	python3-pytest-xdist >= 1.31
 BuildRequires:	python3-pytz >= 2020.1
 %endif
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.714
+BuildRequires:	rpmbuild(macros) >= 2.044
 %if %{with doc}
 BuildRequires:	sphinx-pdg >= 2
 BuildRequires:	python3-ipython
@@ -81,9 +86,10 @@ Dokumentacja API modułu Pythona pandas.
 
 %prep
 %setup -q -n pandas-%{version}
+%patch -P0 -p1
 
 %build
-%py3_build
+%py3_build_pyproject
 
 %if %{with tests}
 cd build-3/lib.*
@@ -101,11 +107,8 @@ cd doc
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%py3_install
+%py3_install_pyproject
 
-%{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/pandas/_libs/*.in
-%{__rm} -r $RPM_BUILD_ROOT%{py3_sitedir}/pandas/_libs/src
-%{__rm} -r $RPM_BUILD_ROOT%{py3_sitedir}/pandas/_libs/tslibs/src
 %{__rm} -r $RPM_BUILD_ROOT%{py3_sitedir}/pandas/tests
 
 %clean
@@ -113,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE README.md RELEASE.md
+%doc LICENSE README.md
 %dir %{py3_sitedir}/pandas
 %{py3_sitedir}/pandas/*.py
 %{py3_sitedir}/pandas/__pycache__
@@ -121,13 +124,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{py3_sitedir}/pandas/_libs
 %attr(755,root,root) %{py3_sitedir}/pandas/_libs/*.cpython-*.so
 %{py3_sitedir}/pandas/_libs/__init__.py
-%{py3_sitedir}/pandas/_libs/*.pxd
 %{py3_sitedir}/pandas/_libs/*.py[ix]
 %{py3_sitedir}/pandas/_libs/__pycache__
 %dir %{py3_sitedir}/pandas/_libs/tslibs
 %attr(755,root,root) %{py3_sitedir}/pandas/_libs/tslibs/*.cpython-*.so
 %{py3_sitedir}/pandas/_libs/tslibs/__init__.py
-%{py3_sitedir}/pandas/_libs/tslibs/*.pxd
 %{py3_sitedir}/pandas/_libs/tslibs/*.py[ix]
 %{py3_sitedir}/pandas/_libs/tslibs/__pycache__
 %dir %{py3_sitedir}/pandas/_libs/window
@@ -150,14 +151,12 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/pandas/io/json
 %{py3_sitedir}/pandas/io/parsers
 %dir %{py3_sitedir}/pandas/io/sas
-%attr(755,root,root) %{py3_sitedir}/pandas/io/sas/_sas.cpython-*.so
 %{py3_sitedir}/pandas/io/sas/*.py
-%{py3_sitedir}/pandas/io/sas/*.pyx
 %{py3_sitedir}/pandas/io/sas/__pycache__
 %{py3_sitedir}/pandas/plotting
 %{py3_sitedir}/pandas/tseries
 %{py3_sitedir}/pandas/util
-%{py3_sitedir}/pandas-%{version}-py*.egg-info
+%{py3_sitedir}/pandas-%{version}.dist-info
 
 %if %{with doc}
 %files apidocs
