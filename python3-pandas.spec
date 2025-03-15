@@ -8,7 +8,7 @@ Summary:	Powerful data structures for data analysis, time series and statistics
 Summary(pl.UTF-8):	Elastyczne struktury danych do analizy danych, szeregów chronologicznych i statystyki
 Name:		python3-pandas
 Version:	2.2.3
-Release:	2
+Release:	3
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pandas/
