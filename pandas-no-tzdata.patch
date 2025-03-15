@@ -1,0 +1,12 @@
+--- pandas-2.2.3/pyproject.toml.orig	2025-03-15 22:00:44.749982981 +0100
++++ pandas-2.2.3/pyproject.toml	2025-03-15 22:05:17.094430713 +0100
+@@ -31,8 +31,7 @@ dependencies = [
+   "numpy>=1.23.2; python_version=='3.11'",
+   "numpy>=1.26.0; python_version>='3.12'",
+   "python-dateutil>=2.8.2",
+-  "pytz>=2020.1",
+-  "tzdata>=2022.7"
++  "pytz>=2020.1"
+ ]
+ classifiers = [
+     'Development Status :: 5 - Production/Stable',

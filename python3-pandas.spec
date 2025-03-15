@@ -8,7 +8,7 @@ Summary:	Powerful data structures for data analysis, time series and statistics
 Summary(pl.UTF-8):	Elastyczne struktury danych do analizy danych, szeregów chronologicznych i statystyki
 Name:		python3-pandas
 Version:	2.2.3
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pandas/
@@ -18,19 +18,30 @@ Patch0:		no-strict-deps.patch
 URL:		https://pypi.org/project/pandas/
 BuildRequires:	libstdc++-devel
 BuildRequires:	meson >= 1.2.1
+BuildRequires:	patchelf
 BuildRequires:	python3-Cython >= 3.0.5
 BuildRequires:	python3-Cython < 3.1
 BuildRequires:	python3-build
-BuildRequires:	python3-devel >= 1:3.8
+BuildRequires:	python3-devel >= 1:3.9
 BuildRequires:	python3-installer
 BuildRequires:	python3-meson-python >= 0.13.1
 BuildRequires:	python3-numpy-devel >= 2.0
 BuildRequires:	python3-versioneer
+BuildRequires:	python3-wheel
 %if %{with tests}
-BuildRequires:	python3-dateutil >= 2.8.1
+BuildRequires:	python3-dateutil >= 2.8.2
 # used by hypothesis
 BuildRequires:	python3-dateutil-zoneinfo >= 2.8.1
 BuildRequires:	python3-hypothesis >= 5.5.3
+%if "%{py3_ver}" < "3.11"
+BuildRequires:	python3-numpy >= 1.22.4
+%endif
+%if "%{py3_ver}" == "3.11"
+BuildRequires:	python3-numpy >= 1.23.2
+%endif
+%if "%{py3_ver}" >= "3.12"
+BuildRequires:	python3-numpy >= 1.26.0
+%endif
 BuildRequires:	python3-pytest >= 6.0
 BuildRequires:	python3-pytest-asyncio
 BuildRequires:	python3-pytest-xdist >= 1.31
