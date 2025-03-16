@@ -8,13 +8,14 @@ Summary:	Powerful data structures for data analysis, time series and statistics
 Summary(pl.UTF-8):	Elastyczne struktury danych do analizy danych, szeregów chronologicznych i statystyki
 Name:		python3-pandas
 Version:	2.2.3
-Release:	3
+Release:	4
 License:	BSD
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/pandas/
 Source0:	https://files.pythonhosted.org/packages/source/p/pandas/pandas-%{version}.tar.gz
 # Source0-md5:	67cae6d658e0e0716518afd84d7d43ce
 Patch0:		no-strict-deps.patch
+Patch1:		pandas-no-tzdata.patch
 URL:		https://pypi.org/project/pandas/
 BuildRequires:	libstdc++-devel
 BuildRequires:	meson >= 1.2.1
@@ -98,6 +99,7 @@ Dokumentacja API modułu Pythona pandas.
 %prep
 %setup -q -n pandas-%{version}
 %patch -P0 -p1
+%patch -P1 -p1
 
 %build
 %py3_build_pyproject
